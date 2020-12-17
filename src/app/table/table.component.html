@@ -1,0 +1,46 @@
+
+  <label>Cerca</label>
+  <select class = "custom-select" [(ngModel)]="selectedFilter">
+    <option  *ngFor = "let filter of tableConfig.search.columns" >
+      {{filter}}
+    </option>
+  </select>
+
+
+<input  class = "form-control" [(ngModel)] = "searched" type = "text"  value = "{{searched}}" placeholder="Inserisci ...">
+
+
+
+
+
+<table class = "table" >
+
+  <thead class = "thead-dark">
+  <tr >
+    <th scope = "col" *ngFor="let column of tableConfig.headers;" ><mat-icon class = 'material-icons' (click) = "ordina(column.key);" > {{icon}}</mat-icon>{{column.label}}  </th>
+
+  </tr>
+  </thead>
+
+  <tbody>
+  <tr *ngFor="let row of data | filter: selectedFilter : searched |  pagination: perPage: selectedPage ">
+    <td *ngFor="let column of tableConfig.headers;" >
+      {{row[column.key]}}
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+  <label>Elementi per pagina</label>
+  <select  class = "custom-select" [(ngModel)]="perPage">
+    <option  *ngFor = "let itemPerPage of tableConfig.pagination.itemPerPageOptions" >
+      {{itemPerPage}}
+    </option>
+  </select>
+
+<label>Page</label>
+<input class = "form-control" [(ngModel)] = "selectedPage" type = "number"  value = "{{selectedPage}}">
+<br>
+
+<button mat-raised-button color="primary" *ngFor="let act of tableConfig.actions" (click) = "op(act)" class = "b">{{act}}</button>
+
