@@ -21,7 +21,12 @@ export class ShowReservationConfig{
     {
       key: 'dataFine',
       label: 'Data Fine'
-    }];
+    },
+    {
+      key: 'approvato',
+      label: 'Approvato'
+    }
+  ];
 
   orderconfig: MyOrder = {
     defaultColumn: 'id',
@@ -33,7 +38,7 @@ export class ShowReservationConfig{
     itemPerPageOptions: [3, 5, 10]
   };
   searchconfig: MySearch = {
-    columns: ['id', 'targa', 'dataInizio', 'dataFine']
+    columns: ['id', 'targa', 'dataInizio', 'dataFine', 'approvato']
   };
   actions: MyTableActionEnum[] = [MyTableActionEnum.NEW_ROW, MyTableActionEnum.EDIT, MyTableActionEnum.DELETE];
   constructor() {

@@ -21,6 +21,10 @@ export class ShowUserConfig{
     {
       key: 'email',
       label: 'Email'
+    },
+    {
+      key: 'password',
+      label: 'Password'
     }];
 
   orderconfig: MyOrder = {
@@ -33,7 +37,7 @@ export class ShowUserConfig{
     itemPerPageOptions: [3, 5, 10]
   };
   searchconfig: MySearch = {
-    columns: ['id', 'nome', 'cognome', 'email']
+    columns: ['id', 'nome', 'cognome', 'email', 'password']
   };
   actions: MyTableActionEnum[] = [MyTableActionEnum.NEW_ROW, MyTableActionEnum.EDIT, MyTableActionEnum.DELETE];
   constructor() {

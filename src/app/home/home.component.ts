@@ -8,6 +8,8 @@ import {UserService} from '../service/user.service';
 import {ShowUserConfig} from '../config/ShowUserConfig';
 import {ReservationService} from '../service/reservation.service';
 import {ShowReservationConfig} from '../config/ShowReservationConfig';
+import {MyButtonConfig} from '../config/MyButtonConfig';
+import {Router} from '@angular/router';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -18,13 +20,15 @@ export class HomeComponent implements OnInit {
   reservationConfig: ShowReservationConfig;
   provadati: any[];
   configTable: MyTableConfig;
+  operazioni: MyButtonConfig[];
   type: string;
-
-  constructor(private userService: UserService, private reservationService: ReservationService) { }
+  idUser:number;
+  constructor(private userService: UserService, private reservationService: ReservationService, private router: Router) { }
 
   ngOnInit(): void {
-    this.type = 's';
-    if (this.type === 'u') {
+    this.idUser = 1;  // solo per questa fase poi sarà inizializzato a seconda di chi logga
+    this.type = 'u'; // solo per questa fase poi sarà inizializzato a seconda di chi logga
+    if (this.type === 's') {
       this.userConfig = new ShowUserConfig();
 
       this.configTable = {
@@ -35,7 +39,19 @@ export class HomeComponent implements OnInit {
         actions: this.userConfig.actions,
 
       };
+      this.operazioni = [{
+        customCssClass : 'btn btn-warning',
+        text: 'modifica',
+        icon: 'oi oi-cog'
 
+      },
+        {
+          customCssClass : 'btn btn-danger',
+          text: 'elimina',
+          icon: 'oi oi-x'
+
+        },
+      ];
       this.userService.getUsers().subscribe(
         response =>
           this.provadati = response
@@ -52,17 +68,54 @@ export class HomeComponent implements OnInit {
           actions: this.reservationConfig.actions,
 
         };
+        this.operazioni = [{
+          customCssClass : 'btn btn-warning',
+          text: 'modifica',
+          icon: 'oi oi-cog'
 
-        this.reservationService.getReservations().subscribe(
+        },
+          {
+          customCssClass : 'btn btn-danger',
+          text: 'elimina',
+          icon: 'oi oi-x'
+
+        },
+        ];
+        this.reservationService.getReservationsByIdUser(this.idUser).subscribe(
           response =>
             this.provadati = response
         );
-        console.log(this.provadati);
+       // console.log(this.provadati);
 
     }
   }
     opButton(op: number){
-    console.log(op);
+    if(this.type === 's'){
+      switch(op) {
+        case 0:
+          this.router.navigate([`${'add-user'}`]);
+      }
+    }else{
+      switch(op) {
+        case 0:
+          this.router.navigate([`${'add-reservation'}`]);
+      }
+    }
   }
-
+  opSuRiga(object: any) {
+    console.log('we', object.opriga, object.object);
+    if (this.type === 's') {
+      if (object.opriga === 'elimina') {
+        this.userService.deleteUser(object.object);
+      } else {
+        this.router.navigate([`${'handle-user'}`, object.object]); //eventualmente passare solo l'id
+      }
+    }else{
+      if (object.opriga === 'elimina') {
+        this.reservationService.deleteReservation(object.object);
+      } else {
+        this.router.navigate([`${'handle-reservation'}`, object.object]); //eventualmente passare solo l'id
+      }
+    }
+  }
 }

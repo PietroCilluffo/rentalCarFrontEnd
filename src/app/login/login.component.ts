@@ -10,7 +10,7 @@ export class LoginComponent implements OnInit {
   configlogin: MyButtonConfig = {
    customCssClass : 'btn btn-primary',
    text: 'login',
-   icon: 'oi oi-home'
+   icon: 'oi oi-account-login'
 };
   constructor() { }
 

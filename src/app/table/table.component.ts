@@ -2,7 +2,9 @@ import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {MyTableConfig} from '../config/MyTableConfig';
 import {orderBy} from 'lodash';
 import * as _ from 'lodash';
-
+import {GestRighe} from '../config/GestRighe';
+import {MyButtonConfig} from '../config/MyButtonConfig';
+declare var $: any;
 
 
 @Component({
@@ -14,8 +16,8 @@ export class TableComponent implements OnInit {
   @Input () tableConfig: MyTableConfig ;
   @Input () data: any [];
   @Output() operation = new EventEmitter<number>();
-
-
+  @Input()  gestRighe: MyButtonConfig[];
+  @Output() opRiga = new EventEmitter<any>();
   orderType: string;
   icon: string;
   key: string;
@@ -24,6 +26,8 @@ export class TableComponent implements OnInit {
   searched: string;
   selectedPage: number;
   perPage: number;
+  tempOP: string;
+  tempOB: any;
   constructor() { }
 
   ngOnInit(): void {
@@ -66,7 +70,25 @@ export class TableComponent implements OnInit {
   op(operation: number) {
     this.operation.emit(operation);
   }
+  opSuRiga(opriga: string, object: any) {
+    if(opriga === 'elimina'){
+      this.tempOB = object;
+      this.tempOP = opriga;
+      $("#gestEl").modal('show');
+    }else{
+      this.opRiga.emit({opriga, object});
+    }
 
+  }
+
+  salva(opriga: string, object: any){
+    opriga = this.tempOP;
+    object = this.tempOB;
+
+
+    this.opRiga.emit({opriga, object});
+    $("#gestEl").modal('hide');
+  }
 }
 
 

@@ -1,0 +1,22 @@
+<div class="jumbotron jumbotron-billboard">
+  <div class="img"></div>
+  <div class="container ">
+    <h1 class="display-4">Gestisci la tua prenotazione</h1>
+  </div>
+</div>
+<form class = "form" [formGroup]="reservationForm">
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="targa">Data Inizio</label>
+      <input type="date" class="form-control" id="targa" formControlName="dataInizio" placeholder="Modifica la data" value = "{{reservation.dataInzio}}">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputPassword4">Data Fine</label>
+      <input type="date" class="form-control" id="inputPassword4" formControlName="dataFine"  placeholder="Modifica la data" value = "{{reservation.dataFine}}">
+    </div>
+  </div>
+
+
+  <app-button [mybuttonconfig]="configmodifica" (click)="modifica()" ></app-button>
+</form>
+

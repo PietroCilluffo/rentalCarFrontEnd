@@ -1,4 +1,6 @@
-
+<div class = "container-fluid">
+  <div class = "row">
+    <div class = "col">
   <label>Cerca</label>
   <select class = "custom-select" [(ngModel)]="selectedFilter">
     <option  *ngFor = "let filter of tableConfig.search.columns" >
@@ -7,13 +9,20 @@
   </select>
 
 
-<input  class = "form-control" [(ngModel)] = "searched" type = "text"  value = "{{searched}}" placeholder="Inserisci ...">
+      <input  class = "form-control" [(ngModel)] = "searched" type = "text"  value = "{{searched}}" placeholder="Inserisci ...">
+    </div>
+    <div class = "col">
+      <button class = "btn btn-dark pers" *ngFor="let act of tableConfig.actions" (click) = "op(act)" >
+        <div *ngIf="act === 0">Aggiungi</div>
+        <div *ngIf="act === 1">Modifica</div>
+        <div *ngIf="act === 2">Elimina tutti</div>
+      </button>
+    </div>
+  </div>
+</div>
 
 
-
-
-
-<table class = "table" >
+<table class = "table custom" >
 
   <thead class = "thead-dark">
   <tr >
@@ -27,20 +36,47 @@
     <td *ngFor="let column of tableConfig.headers;" >
       {{row[column.key]}}
     </td>
+    <td *ngFor="let o of gestRighe">
+      <app-button [mybuttonconfig]="o" (click) = "opSuRiga(o.text,row)"></app-button>
+
+    </td>
   </tr>
   </tbody>
 </table>
-
+<div class = "container-sm">
+  <div class = "row">
+  <div class = "col">
   <label>Elementi per pagina</label>
   <select  class = "custom-select" [(ngModel)]="perPage">
     <option  *ngFor = "let itemPerPage of tableConfig.pagination.itemPerPageOptions" >
       {{itemPerPage}}
     </option>
   </select>
-
+  </div>
+  <div class = "col">
 <label>Page</label>
 <input class = "form-control" [(ngModel)] = "selectedPage" type = "number"  value = "{{selectedPage}}">
-<br>
+  </div>
+  </div>
+</div>
 
-<button mat-raised-button color="primary" *ngFor="let act of tableConfig.actions" (click) = "op(act)" class = "b">{{act}}</button>
-
+<!-- Modal -->
+<div class="modal fade" id="gestEl" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Avviso</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Sei sicuro di voler eliminare?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
+        <button type="button" class="btn btn-primary" (click)="salva('','')">Salva</button>
+      </div>
+    </div>
+  </div>
+</div>
