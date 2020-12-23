@@ -68,9 +68,9 @@ export class HandleUserComponent implements OnInit {
     );
   }
   opSuRiga(object: any){
-    console.log('we',object.opriga,object.object);
-    if(object.opriga === 'approva'){
-      this.reservationService.approva(object.object);
+    console.log('we', object.text, object.obj);
+    if(object.text === 'approva'){
+      this.reservationService.approva(object.obj);
     }else{
 
     }

@@ -15,7 +15,7 @@ declare var $: any;
 export class TableComponent implements OnInit {
   @Input () tableConfig: MyTableConfig ;
   @Input () data: any [];
-  @Output() operation = new EventEmitter<number>();
+  @Output() operation = new EventEmitter<string>();
   @Input()  gestRighe: MyButtonConfig[];
   @Output() opRiga = new EventEmitter<any>();
   orderType: string;
@@ -67,17 +67,18 @@ export class TableComponent implements OnInit {
     }
 
   }
-  op(operation: number) {
+  op(operation: string) {
     this.operation.emit(operation);
   }
-  opSuRiga(opriga: string, object: any) {
-    if(opriga === 'elimina'){
+  opSuRiga(opriga: any, object: any) {
+
       this.tempOB = object;
-      this.tempOP = opriga;
-      $("#gestEl").modal('show');
-    }else{
-      this.opRiga.emit({opriga, object});
-    }
+      this.tempOP = opriga.text;
+      if (opriga.ref){
+        $(opriga.ref).modal('show');
+      }else{
+        this.opRiga.emit({text: opriga.text, obj: object});
+      }
 
   }
 

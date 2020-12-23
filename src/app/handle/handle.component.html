@@ -4,4 +4,4 @@
     <h1 class="display-4">{{message}}</h1>
   </div>
 </div>
-<app-add-form [config] = "config"  (submitter)="submit($event)"></app-add-form>
+<app-handle-form [config] = "config" (modifica)="aggiorna($event)"></app-handle-form>

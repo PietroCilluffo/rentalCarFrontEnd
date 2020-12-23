@@ -1,79 +1,88 @@
 import { Component, OnInit } from '@angular/core';
+import {FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {VehicleService} from '../service/vehicle.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {User} from '../../User';
+import {UserService} from '../service/user.service';
+import {ReservationService} from '../service/reservation.service';
 import {Vehicle} from '../../Vehicle';
 import {VEHICLE} from '../../mock-vehicle';
-import {User} from '../../User';
 import {USER} from '../../mock-user';
 import {Reservation} from '../../Reservation';
 import {RESERVATION} from '../../mock-reservation';
-import {UserService} from '../service/user.service';
-import {ReservationService} from '../service/reservation.service';
+import {VehicleService} from '../service/vehicle.service';
 
 @Component({
-  selector: 'app-add',
-  templateUrl: './add.component.html',
-  styleUrls: ['./add.component.css']
+  selector: 'app-handle',
+  templateUrl: './handle.component.html',
+  styleUrls: ['./handle.component.css']
 })
-export class AddComponent implements OnInit {
+export class HandleComponent implements OnInit {
   tipo: number;
   config: any;
-  vehicleForm: FormGroup;
+  user: any;
+  vehicle: any;
+  reservation:any;
   message: string;
-  constructor(private route: ActivatedRoute, private fb: FormBuilder, private userService: UserService,
-              private reservationService: ReservationService, private vehicleService: VehicleService) { }
+  constructor(private route: ActivatedRoute, private reservationService: ReservationService,
+  private userService: UserService, private vehicleService: VehicleService, ) { }
 
   ngOnInit(): void {
     this.tipo = Number(this.route.snapshot.paramMap.get('tipo'));
 
     if (this.tipo === 1){
-      this.message = 'Aggiungi Veicolo';
+      this.vehicle = this.route.snapshot.paramMap.get('vehicle');
+      this.message = 'Gestisci Veicolo';
       this.config = {
-
+        object: this.vehicle,
 
         campi: ['targa', 'modello', 'casa', 'anno'],
         tipo: 1,
       };
     }
     if (this.tipo === 2){
-      this.message = 'Aggiungi Utente';
+     // let idUser = this.route.snapshot.paramMap.get('idUser');
+
+      this.user = this.route.snapshot.paramMap.get('user');
+      this.message = 'Gestisci Utente';
       this.config = {
 
-
+        object: this.user,
         campi: ['nome', 'cognome', 'email', 'password'],
         tipo: 2,
       };
     }
     if (this.tipo === 3){
-      this.message = 'Aggiungi Prenotazione';
+      this.reservation = this.route.snapshot.paramMap.get('reservation');
+      this.message = 'Gestisci Prenotazione';
       this.config = {
 
-
+        object: this.reservation,
         campi: ['dataInizio', 'dataFine'],
         tipo: 3,
       };
     }
   }
-  submit(object: any){
-
+  aggiorna(object: any){
     if (this.tipo === 1){
 
       const vehicle = new Vehicle(8,  object.values['targa'],  object.values['modello'], object.values['casa'], object.values['anno']);
       console.log(VEHICLE, vehicle);
-      this.vehicleService.addVehicle(VEHICLE, vehicle);
+      this.vehicleService.updateVehicle( vehicle);
     }
     if(this.tipo === 2){
 
       const user = new User(8, object.values['nome'],  object.values['cognome'],  object.values['email'],  object.values['password']);
 
-      this.userService.addUser(USER, user);
+      this.userService.updateUser(user);
     }
     if(this.tipo === 3){
 
       const reservation = new Reservation(8, object.values['dataInizio'],object.values['dataFine'], object.targa, object.idUser);
 
-      this.reservationService.addReservation(RESERVATION, reservation);
+      this.reservationService.updateReservation(reservation);
     }
   }
-}
+  }
+
+
+

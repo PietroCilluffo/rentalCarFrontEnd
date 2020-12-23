@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.idUser = 1;  // solo per questa fase poi sarà inizializzato a seconda di chi logga
-    this.type = 'u'; // solo per questa fase poi sarà inizializzato a seconda di chi logga
+    this.type = 's'; // solo per questa fase poi sarà inizializzato a seconda di chi logga
     if (this.type === 's') {
       this.userConfig = new ShowUserConfig();
 
@@ -48,7 +48,8 @@ export class HomeComponent implements OnInit {
         {
           customCssClass : 'btn btn-danger',
           text: 'elimina',
-          icon: 'oi oi-x'
+          icon: 'oi oi-x',
+          ref: '#gestEl',
 
         },
       ];
@@ -74,10 +75,11 @@ export class HomeComponent implements OnInit {
           icon: 'oi oi-cog'
 
         },
-          {
+        {
           customCssClass : 'btn btn-danger',
           text: 'elimina',
-          icon: 'oi oi-x'
+          icon: 'oi oi-x',
+            ref: '#gestEl',
 
         },
         ];
@@ -89,32 +91,35 @@ export class HomeComponent implements OnInit {
 
     }
   }
-    opButton(op: number){
+    opButton(op: string){
     if(this.type === 's'){
       switch(op) {
-        case 0:
+        case 'AGGIUNGI':
           this.router.navigate([`${'add'}`, {tipo: 2}]);
+          //sarà poi definito un' elimina tutti
       }
     }else{
       switch(op) {
-        case 0:
+        case 'AGGIUNGI':
           this.router.navigate([`${'add'}`, {tipo: 3}]);
       }
     }
   }
   opSuRiga(object: any) {
-    console.log('we', object.opriga, object.object);
+
     if (this.type === 's') {
-      if (object.opriga === 'elimina') {
-        this.userService.deleteUser(object.object);
+      if (object.text === 'elimina') {
+        this.userService.deleteUser(object.obj);
       } else {
-        this.router.navigate([`${'handle-user'}`, object.object]); //eventualmente passare solo l'id
+
+        console.log('we', object.text, object.obj);
+        this.router.navigate(['handle', JSON.stringify(object.obj),{tipo: 2}]); //eventualmente passare solo l'id
       }
     }else{
-      if (object.opriga === 'elimina') {
-        this.reservationService.deleteReservation(object.object);
+      if (object.text === 'elimina') {
+        this.reservationService.deleteReservation(object.obj);
       } else {
-        this.router.navigate([`${'handle-reservation'}`, object.object]); //eventualmente passare solo l'id
+        this.router.navigate([`${'handle'}`, {reservation: object.obj}, {tipo: 3}]); //eventualmente passare solo l'id
       }
     }
   }

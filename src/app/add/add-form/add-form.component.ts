@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {VehicleService} from '../../service/vehicle.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MyButtonConfig} from '../../config/MyButtonConfig';
@@ -20,11 +20,14 @@ import {ReservationService} from '../../service/reservation.service';
 })
 export class AddFormComponent implements OnInit {
    @Input() config: any;
+   @Output() submitter = new EventEmitter<any>();
+   values: any[];
    form: FormGroup;
    campi: any[];
    tipo: number;
    idUser: number;
    targa: string;
+
    vehicles: Vehicle[];
   configTable: MyTableConfig;
   vehicleConfig: ShowVehicleConfig;
@@ -33,10 +36,11 @@ export class AddFormComponent implements OnInit {
     text: 'aggiungi',
     icon: 'oi oi-plus'
   };
-  constructor(private vehicleService: VehicleService, private fb: FormBuilder, private userService: UserService, private reservationService: ReservationService) { }
+  constructor(private vehicleService: VehicleService, private fb: FormBuilder, ) { }
 
   ngOnInit(): void {
-
+    this.idUser = null;
+    this.targa = null;
     this.campi = this.config.campi;
     this.tipo = this.config.tipo;
     if(this.tipo === 1){
@@ -85,23 +89,11 @@ export class AddFormComponent implements OnInit {
     }
   }
   submit(){
-      if (this.tipo === 1){
-        const values = this.form.value;
-        const vehicle = new Vehicle(8, values.targa, values.modello, values.casa, values.anno);
-        console.log(VEHICLE, vehicle);
-        this.vehicleService.addVehicle(VEHICLE, vehicle);
-      }
-      if(this.tipo === 2){
-        const values = this.form.value;
-        const user = new User(8, values.nome, values.cognome, values.email, values.password);
+    console.log('sono in add-fomr');
+    this.values = this.form.value;
 
-        this.userService.addUser(USER, user);
-      }
-      if(this.tipo === 3){
-        const values = this.form.value;
-        const reservation = new Reservation(8, values.dataInizio, values.dataFine, this.targa, this.idUser);
 
-        this.reservationService.addReservation(RESERVATION, reservation);
-      }
+    this.submitter.emit({values: this.values, targa: this.targa, idUser: this.idUser});
+
   }
 }

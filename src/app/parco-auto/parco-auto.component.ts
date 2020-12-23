@@ -78,16 +78,16 @@ export class ParcoAutoComponent implements OnInit {
     }
   }
   opSuRiga(object: any){
-    console.log('we',object.opriga,object.object);
-    if(object.opriga === 'elimina'){
-      this.vehicleService.deleteVehicle(object.object).subscribe(
+    console.log('we',object.text,object.obj);
+    if(object.text === 'elimina'){
+      this.vehicleService.deleteVehicle(object.obj).subscribe(
 
       );
 
     }
-    if (object.opriga === 'modifica'){
+    if (object.text === 'modifica'){
 
-       this.router.navigate([`${'handle-vehicle'}`,object.object]);
+       this.router.navigate([`${'handle-vehicle'}`, {vehicle: object.obj}, {tipo: 1}]);
     }
   }
 

@@ -26,6 +26,8 @@ import { HandleUserComponent } from './handle-user/handle-user.component';
 import { HandleReservationComponent } from './handle-reservation/handle-reservation.component';
 import { AddComponent } from './add/add.component';
 import { AddFormComponent } from './add/add-form/add-form.component';
+import { HandleComponent } from './handle/handle.component';
+import { HandleFormComponent } from './handle/handle-form/handle-form.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,11 @@ import { AddFormComponent } from './add/add-form/add-form.component';
 
     AddComponent,
 
-    AddFormComponent
+    AddFormComponent,
+
+    HandleComponent,
+
+    HandleFormComponent
   ],
     imports: [
         BrowserModule,

@@ -9,6 +9,7 @@ import {HandleVehicleComponent} from './handle-vehicle/handle-vehicle.component'
 import {HandleUserComponent} from './handle-user/handle-user.component';
 import {HandleReservationComponent} from './handle-reservation/handle-reservation.component';
 import {AddComponent} from './add/add.component';
+import {HandleComponent} from './handle/handle.component';
 
 const routes: Routes =  [
   {path: 'login', component: LoginComponent},
@@ -20,6 +21,7 @@ const routes: Routes =  [
   {path: 'handle-user', component: HandleUserComponent},
   {path: 'handle-reservation', component: HandleReservationComponent},
   {path: 'add', component: AddComponent},
+  {path: 'handle', component: HandleComponent},
 
 ];
 

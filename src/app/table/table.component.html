@@ -13,9 +13,7 @@
     </div>
     <div class = "col">
       <button class = "btn btn-dark pers" *ngFor="let act of tableConfig.actions" (click) = "op(act)" >
-        <div *ngIf="act === 0">Aggiungi</div>
-        <div *ngIf="act === 1">Modifica</div>
-        <div *ngIf="act === 2">Elimina tutti</div>
+        {{act}}
       </button>
     </div>
   </div>
@@ -37,7 +35,7 @@
       {{row[column.key]}}
     </td>
     <td *ngFor="let o of gestRighe">
-      <app-button [mybuttonconfig]="o" (click) = "opSuRiga(o.text,row)"></app-button>
+      <app-button [mybuttonconfig]="o" (click) = "opSuRiga(o,row)"></app-button>
 
     </td>
   </tr>
