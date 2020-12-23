@@ -93,12 +93,12 @@ export class HomeComponent implements OnInit {
     if(this.type === 's'){
       switch(op) {
         case 0:
-          this.router.navigate([`${'add-user'}`]);
+          this.router.navigate([`${'add'}`, {tipo: 2}]);
       }
     }else{
       switch(op) {
         case 0:
-          this.router.navigate([`${'add-reservation'}`]);
+          this.router.navigate([`${'add'}`, {tipo: 3}]);
       }
     }
   }

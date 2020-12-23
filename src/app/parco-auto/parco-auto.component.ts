@@ -20,12 +20,12 @@ export class ParcoAutoComponent implements OnInit {
   vehicleConfig: ShowVehicleConfig;
   operazioni: MyButtonConfig[];
   type: string;
-
+  tipo: number;
   constructor(private vehicleService: VehicleService, private router: Router) { }
 
   ngOnInit(): void {
     this.vehicleConfig = new ShowVehicleConfig();
-    this.type = 'u'; //quando ci sarà un login si potrà configurare passandolo nell'url con lo snapshot
+    this.type = 's'; //quando ci sarà un login si potrà configurare passandolo nell'url con lo snapshot
 
     if(this.type === 's'){   //sse sono un admin posso gestire i veicoli
       this.configTable = {
@@ -72,7 +72,8 @@ export class ParcoAutoComponent implements OnInit {
     console.log(op);
     switch (op) {
       case 0 : {
-          this.goToPage('add-vehicle');
+        this.tipo = 1;
+        this.router.navigate([`${'add'}`, {tipo: 1}]);
       }
     }
   }

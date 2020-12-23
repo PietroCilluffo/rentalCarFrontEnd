@@ -20,12 +20,12 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import { ParcoAutoComponent } from './parco-auto/parco-auto.component';
 import { HandleVehicleComponent } from './handle-vehicle/handle-vehicle.component';
-import { AddVehicleComponent } from './add-vehicle/add-vehicle.component';
 
-import { AddUserComponent } from './add-user/add-user.component';
-import { AddReservationComponent } from './add-reservation/add-reservation.component';
+
 import { HandleUserComponent } from './handle-user/handle-user.component';
 import { HandleReservationComponent } from './handle-reservation/handle-reservation.component';
+import { AddComponent } from './add/add.component';
+import { AddFormComponent } from './add/add-form/add-form.component';
 
 @NgModule({
   declarations: [
@@ -40,15 +40,19 @@ import { HandleReservationComponent } from './handle-reservation/handle-reservat
     TableComponent,
     ParcoAutoComponent,
     HandleVehicleComponent,
-    AddVehicleComponent,
 
-    AddUserComponent,
 
-    AddReservationComponent,
+
+
+
 
     HandleUserComponent,
 
-    HandleReservationComponent
+    HandleReservationComponent,
+
+    AddComponent,
+
+    AddFormComponent
   ],
     imports: [
         BrowserModule,
