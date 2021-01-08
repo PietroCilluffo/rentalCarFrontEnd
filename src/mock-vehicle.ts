@@ -80,3 +80,11 @@ export function deleteVehicle(v): Vehicle[]{
   console.log('eliminato', v);
   return VEHICLE;
 }
+export function getVehicleById(id): any {
+
+  let number = Number (id);
+  let  v = VEHICLE.filter(
+    vehicle => vehicle.id === number);
+
+  return v;
+}

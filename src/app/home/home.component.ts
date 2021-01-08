@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.idUser = 1;  // solo per questa fase poi sarà inizializzato a seconda di chi logga
-    this.type = 's'; // solo per questa fase poi sarà inizializzato a seconda di chi logga
+    this.type = 'u'; // solo per questa fase poi sarà inizializzato a seconda di chi logga
     if (this.type === 's') {
       this.userConfig = new ShowUserConfig();
 
@@ -110,16 +110,18 @@ export class HomeComponent implements OnInit {
     if (this.type === 's') {
       if (object.text === 'elimina') {
         this.userService.deleteUser(object.obj);
+
       } else {
 
-        console.log('we', object.text, object.obj);
-        this.router.navigate(['handle', JSON.stringify(object.obj),{tipo: 2}]); //eventualmente passare solo l'id
+        console.log('we', object.text, object.obj.id);
+
+        this.router.navigate([`${'handle'}`, {id: object.obj.id , tipo: 2}]); //eventualmente passare solo l'id
       }
     }else{
       if (object.text === 'elimina') {
         this.reservationService.deleteReservation(object.obj);
       } else {
-        this.router.navigate([`${'handle'}`, {reservation: object.obj}, {tipo: 3}]); //eventualmente passare solo l'id
+        this.router.navigate([`${'handle'}`, {id: object.obj.id, tipo: 3}]); //eventualmente passare solo l'id
       }
     }
   }

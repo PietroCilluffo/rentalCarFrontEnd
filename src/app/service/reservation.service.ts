@@ -1,7 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import {RESERVATION, addReservation, getReservationByIdUser, approva, updateReservation,deleteReservation} from '../../mock-reservation';
+import {
+  RESERVATION,
+  addReservation,
+  getReservationByIdUser,
+  approva,
+  updateReservation,
+  deleteReservation,
+  getReservationById
+} from '../../mock-reservation';
 import {Reservation} from '../../Reservation';
 @Injectable({
   providedIn: 'root'
@@ -28,5 +36,8 @@ export class ReservationService {
   }
   deleteReservation(Reservation): any{
     return of(deleteReservation(Reservation))
+  }
+  getReservationById(id): Observable<Reservation>{
+    return of(getReservationById(id));
   }
 }

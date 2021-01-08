@@ -82,3 +82,11 @@ export function deleteUser(v): User[]{
   console.log('eliminato', v);
   return USER;
 }
+export function getUserById(id): any{
+  let number = Number (id);
+
+  let  v = USER.filter(
+    user => user.id === number);
+
+  return v;
+}

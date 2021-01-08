@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {User} from '../../User';
-import {USER,addUser,updateUser,deleteUser} from '../../mock-user';
+import {USER, addUser, updateUser, deleteUser, getUserById} from '../../mock-user';
 
 import { Observable, of } from 'rxjs';
 @Injectable({
@@ -21,5 +21,8 @@ export class UserService {
   }
   deleteUser(User): Observable<any> {
     return of (deleteUser(User));
+  }
+  getUserById(id): Observable<User>{
+    return of (getUserById(id));
   }
 }

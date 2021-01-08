@@ -1,4 +1,5 @@
 import {Reservation} from './Reservation';
+import {USER} from './mock-user';
 export const RESERVATION: Reservation[] = [{
   targa: 'CR847NM',
   dataFine: '24/06/2022',
@@ -97,6 +98,14 @@ export function updateReservation(Reservation):any {
   return;
 }
 export function deleteReservation(Reservation):any{
-  console.log('res',Reservation);
+  console.log('eliminato',Reservation);
   return;
+}
+export function getReservationById(id): any{
+  let number = Number (id);
+
+  let  v = RESERVATION.filter(
+    reservation => reservation.id === number);
+
+  return v;
 }

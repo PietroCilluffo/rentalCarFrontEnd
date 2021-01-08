@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import {addVehicle, VEHICLE, updateVehicle,deleteVehicle} from '../../mock-vehicle';
+import {addVehicle, VEHICLE, updateVehicle, deleteVehicle, getVehicleById} from '../../mock-vehicle';
 import {Vehicle} from '../../Vehicle';
 @Injectable({
   providedIn: 'root'
@@ -23,5 +23,7 @@ export class VehicleService {
   deleteVehicle(v:Vehicle) :Observable<any>{
     return of(deleteVehicle(v));
   }
-
+  getVehicleById(id:any) : Observable<Vehicle>{
+    return of(getVehicleById(id));
+  }
 }

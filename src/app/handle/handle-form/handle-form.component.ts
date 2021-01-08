@@ -32,11 +32,7 @@ export class HandleFormComponent implements OnInit {
   vehicles: Vehicle[];
 
   vehicleConfig: ShowVehicleConfig;
-  configadd: MyButtonConfig = {
-    customCssClass : 'btn btn-primary',
-    text: 'Aggiorna',
-    icon: 'oi oi-cog'
-  };
+  configmodifica: MyButtonConfig ;
   constructor(private fb: FormBuilder, private reservationService: ReservationService) {
   }
 
@@ -44,25 +40,35 @@ export class HandleFormComponent implements OnInit {
     this.idUser = null;
     this.targa = null;
     this.campi = this.config.campi;
+    this.configmodifica = {
+      customCssClass : 'btn btn-primary',
+      text: 'Aggiorna',
+      icon: 'oi oi-cog'
+    };
     this.tipo = this.config.tipo;
-    this.object = this.config.object;
-    if(this.tipo === 1){
-      this.vehicle = this.config.object;
+    this.object = this.config.object[0];
+
+    if (this.tipo === 1){
+      this.vehicle = this.config.object[0];
+
       this.form = this.fb.group({
-        targa: ['', Validators.required],
-        modello: ['', Validators.required],
-        casa: ['', Validators.required],
-        anno: ['', Validators.required],
+        targa: [this.vehicle.targa, Validators.required],
+        modello: [this.vehicle.modello, Validators.required],
+        casa: [this.vehicle.casa, Validators.required],
+        anno: [this.vehicle.anno, Validators.required],
+        id: [this.vehicle.id, Validators.required],
 
       });
     }
     if (this.tipo === 2){
-      this.user = this.config.user;
+      this.user = this.config.object[0];
+      console.log('dentro login-form', this.object);
       this.form = this.fb.group({
-        nome: ['', Validators.required],
-        cognome: ['', Validators.required],
-        email: ['', Validators.required],
-        password: ['', Validators.required],
+        nome: [this.user.nome, Validators.required],
+        cognome: [this.user.cognome, Validators.required],
+        email: [this.user.email, Validators.required],
+        password: [this.user.password, Validators.required],
+        id: [this.user.id, Validators.required],
 
       });
       this.reservationConfig = new ShowReservationConfig();
@@ -83,19 +89,22 @@ export class HandleFormComponent implements OnInit {
 
       ];
 
-      this.reservationService.getReservationsByIdUser(this.config.user.id).subscribe(
+      this.reservationService.getReservationsByIdUser(this.user.id).subscribe(
         response =>
           this.provadati = response
       );
+
     }
     if (this.tipo === 3){
-      this.idUser = 1;
-      this.reservation = this.config.reservation;
-      this.form = this.fb.group({
-        targa: ['', Validators.required],
-        dataInizio: ['', Validators.required],
-        dataFine: ['', Validators.required],
 
+      this.reservation = this.config.object[0];
+      this.form = this.fb.group({
+        targa: [this.reservation.targa, Validators.required],
+        dataInizio: [this.reservation.dataInizio, Validators.required],
+        dataFine: [this.reservation.dataFine, Validators.required],
+        approvato: [this.reservation.approvato, Validators.required],
+        idUser: [this.reservation.idUser, Validators.required],
+        id: [this.reservation.id, Validators.required],
 
       });
     }
@@ -108,8 +117,10 @@ export class HandleFormComponent implements OnInit {
 
     }
   }
-  Modifica(object: any){
+  Modifica(){
+
     this.values = this.form.value;
+    console.log(this.form.value);
     this.modifica.emit({values: this.values});
   }
 }

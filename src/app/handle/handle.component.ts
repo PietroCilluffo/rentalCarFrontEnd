@@ -19,10 +19,11 @@ import {VehicleService} from '../service/vehicle.service';
 export class HandleComponent implements OnInit {
   tipo: number;
   config: any;
-  user: any;
-  vehicle: any;
-  reservation:any;
+  user: User;
+  vehicle: Vehicle;
+  reservation: Reservation;
   message: string;
+  id: any;
   constructor(private route: ActivatedRoute, private reservationService: ReservationService,
   private userService: UserService, private vehicleService: VehicleService, ) { }
 
@@ -30,7 +31,12 @@ export class HandleComponent implements OnInit {
     this.tipo = Number(this.route.snapshot.paramMap.get('tipo'));
 
     if (this.tipo === 1){
-      this.vehicle = this.route.snapshot.paramMap.get('vehicle');
+      this.id = this.route.snapshot.paramMap.get('id');
+     this.vehicleService.getVehicleById(this.id).subscribe(
+       result => this.vehicle = result
+     );
+      console.log('risultato del filtro', this.vehicle);
+
       this.message = 'Gestisci Veicolo';
       this.config = {
         object: this.vehicle,
@@ -42,7 +48,12 @@ export class HandleComponent implements OnInit {
     if (this.tipo === 2){
      // let idUser = this.route.snapshot.paramMap.get('idUser');
 
-      this.user = this.route.snapshot.paramMap.get('user');
+      this.id = this.route.snapshot.paramMap.get('id');
+      console.log('dentro handle', this.id);
+      this.userService.getUserById(this.id).subscribe(
+        result => this.user = result
+      );
+
       this.message = 'Gestisci Utente';
       this.config = {
 
@@ -52,12 +63,15 @@ export class HandleComponent implements OnInit {
       };
     }
     if (this.tipo === 3){
-      this.reservation = this.route.snapshot.paramMap.get('reservation');
+      this.id = this.route.snapshot.paramMap.get('id');
+      this.reservationService.getReservationById(this.id).subscribe(
+        result => this.reservation = result
+      );
       this.message = 'Gestisci Prenotazione';
       this.config = {
 
         object: this.reservation,
-        campi: ['dataInizio', 'dataFine'],
+        campi: ['dataInizio', 'dataFine', 'targa', 'approvato'],
         tipo: 3,
       };
     }
@@ -65,19 +79,19 @@ export class HandleComponent implements OnInit {
   aggiorna(object: any){
     if (this.tipo === 1){
 
-      const vehicle = new Vehicle(8,  object.values['targa'],  object.values['modello'], object.values['casa'], object.values['anno']);
+      const vehicle = new Vehicle(object.values['id'],  object.values['targa'],  object.values['modello'], object.values['casa'], object.values['anno']);
       console.log(VEHICLE, vehicle);
       this.vehicleService.updateVehicle( vehicle);
     }
     if(this.tipo === 2){
 
-      const user = new User(8, object.values['nome'],  object.values['cognome'],  object.values['email'],  object.values['password']);
+      const user = new User(object.values['id'], object.values['nome'],  object.values['cognome'],  object.values['email'],  object.values['password']);
 
       this.userService.updateUser(user);
     }
     if(this.tipo === 3){
 
-      const reservation = new Reservation(8, object.values['dataInizio'],object.values['dataFine'], object.targa, object.idUser);
+      const reservation = new Reservation(object.values['id'], object.values['dataInizio'],object.values['dataFine'], object.values['targa'], object.values['idUser']);
 
       this.reservationService.updateReservation(reservation);
     }

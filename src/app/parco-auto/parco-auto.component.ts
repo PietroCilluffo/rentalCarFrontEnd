@@ -25,7 +25,7 @@ export class ParcoAutoComponent implements OnInit {
 
   ngOnInit(): void {
     this.vehicleConfig = new ShowVehicleConfig();
-    this.type = 's'; //quando ci sarà un login si potrà configurare passandolo nell'url con lo snapshot
+    this.type = 'u'; //quando ci sarà un login si potrà configurare passandolo nell'url con lo snapshot
 
     if(this.type === 's'){   //sse sono un admin posso gestire i veicoli
       this.configTable = {
@@ -36,6 +36,7 @@ export class ParcoAutoComponent implements OnInit {
         actions: this.vehicleConfig.actions,
 
       };
+
       this.operazioni = [{
         customCssClass : 'btn btn-warning',
         text: 'modifica',
@@ -78,7 +79,7 @@ export class ParcoAutoComponent implements OnInit {
     }
   }
   opSuRiga(object: any){
-    console.log('we',object.text,object.obj);
+
     if(object.text === 'elimina'){
       this.vehicleService.deleteVehicle(object.obj).subscribe(
 
@@ -86,8 +87,8 @@ export class ParcoAutoComponent implements OnInit {
 
     }
     if (object.text === 'modifica'){
-
-       this.router.navigate([`${'handle-vehicle'}`, {vehicle: object.obj}, {tipo: 1}]);
+       console.log('we',object.text,object.obj.id);
+       this.router.navigate([`${'handle'}`, {id: object.obj.id, tipo: 1}]);
     }
   }
 

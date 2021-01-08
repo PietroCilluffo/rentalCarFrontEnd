@@ -35,8 +35,10 @@ export class TableComponent implements OnInit {
     this.selectedPage = 0;
     this.selectedFilter = '';
     this.searched = '';
+
     this.orderType = this.tableConfig.order.orderType;
     if (this.tableConfig.order.orderType === 'asc'){
+
       this.data = _.orderBy(this.data, [this.tableConfig.order.defaultColumn], ['asc']);
       this.orderType = 'asc';
 
@@ -87,7 +89,7 @@ export class TableComponent implements OnInit {
     object = this.tempOB;
 
 
-    this.opRiga.emit({opriga, object});
+    this.opRiga.emit({text: opriga, obj: object});
     $("#gestEl").modal('hide');
   }
 }

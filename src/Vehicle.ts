@@ -11,4 +11,5 @@ export class Vehicle{
     this.casa = casa;
     this.anno = anno;
   }
+
 }
