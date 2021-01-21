@@ -4,4 +4,10 @@
     <h1 class="display-4">{{message}}</h1>
   </div>
 </div>
+<div #alert class="alert alert-success alert-dismissible fade show" *ngIf="alertMessage !== null " role="alert">
+  <button type="button" class="close" aria-label="Close" (click)="closeAlert()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <strong>Operazione eseguita!</strong> {{alertMessage}}
+</div>
 <app-handle-form [config] = "config" (modifica)="aggiorna($event)"></app-handle-form>

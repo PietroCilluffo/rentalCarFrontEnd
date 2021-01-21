@@ -40,7 +40,7 @@ export class AddFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.idUser = null;
-    this.targa = null;
+
     this.campi = this.config.campi;
     this.tipo = this.config.tipo;
     if(this.tipo === 1){
@@ -89,7 +89,7 @@ export class AddFormComponent implements OnInit {
     }
   }
   submit(){
-    console.log('sono in add-fomr');
+    console.log('sono in add-fomr' + this.targa);
     this.values = this.form.value;
 
 

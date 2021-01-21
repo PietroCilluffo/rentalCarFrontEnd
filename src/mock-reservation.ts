@@ -6,7 +6,7 @@ export const RESERVATION: Reservation[] = [{
   id: 1,
   dataInizio: '24/06/2002',
   idUser: 1,
-  approvato: 'NO',
+  approvazione: 'NO',
 
 },
   {
@@ -16,7 +16,7 @@ export const RESERVATION: Reservation[] = [{
 
     dataFine: '24/06/2022',
     idUser: 1,
-    approvato: 'NO',
+    approvazione: 'NO',
   },
 
   {
@@ -25,7 +25,7 @@ export const RESERVATION: Reservation[] = [{
     targa: 'CR849NM',
     dataFine: '24/06/2022',
     idUser: 1,
-    approvato: 'NO',
+    approvazione: 'NO',
   },
 
   {
@@ -34,7 +34,7 @@ export const RESERVATION: Reservation[] = [{
     dataInizio: '24/06/2002',
     dataFine: '24/06/2022',
     idUser: 1,
-    approvato: 'NO',
+    approvazione: 'NO',
   },
   {
     targa: 'CR858NM',
@@ -42,7 +42,7 @@ export const RESERVATION: Reservation[] = [{
     dataInizio: '24/06/2002',
     dataFine: '24/06/2022',
     idUser: 1,
-    approvato: 'NO',
+    approvazione: 'NO',
   },
   {
     targa: 'CR859NM',
@@ -50,7 +50,7 @@ export const RESERVATION: Reservation[] = [{
     dataInizio: '24/06/2002',
     dataFine: '24/06/2022',
     idUser: 2,
-    approvato: 'NO',
+    approvazione: 'NO',
   },
 
   {
@@ -59,7 +59,7 @@ export const RESERVATION: Reservation[] = [{
     dataInizio: '24/06/2002',
     dataFine: '24/06/2022',
     idUser: 1,
-    approvato: 'NO',
+    approvazione: 'NO',
 
   }];
 

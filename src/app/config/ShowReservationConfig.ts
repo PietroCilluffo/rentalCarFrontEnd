@@ -23,8 +23,8 @@ export class ShowReservationConfig{
       label: 'Data Fine'
     },
     {
-      key: 'approvato',
-      label: 'Approvato'
+      key: 'approvazione',
+      label: 'Approvazione'
     }
   ];
 
@@ -38,7 +38,7 @@ export class ShowReservationConfig{
     itemPerPageOptions: [3, 5, 10]
   };
   searchconfig: MySearch = {
-    columns: ['id', 'targa', 'dataInizio', 'dataFine', 'approvato']
+    columns: ['id', 'targa', 'dataInizio', 'dataFine', 'approvazione']
   };
   actions: MyTableActionEnum[] = [MyTableActionEnum.NEW_ROW, MyTableActionEnum.EDIT, MyTableActionEnum.DELETE];
   constructor() {

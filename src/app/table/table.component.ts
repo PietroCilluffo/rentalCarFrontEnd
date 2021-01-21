@@ -76,6 +76,7 @@ export class TableComponent implements OnInit {
 
       this.tempOB = object;
       this.tempOP = opriga.text;
+      console.log(opriga.ref);
       if (opriga.ref){
         $(opriga.ref).modal('show');
       }else{

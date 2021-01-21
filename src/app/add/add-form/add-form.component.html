@@ -18,7 +18,7 @@
   <div  class="form-group col-md-6">
     <label>Targa</label>
     <select  class = "custom-select" [(ngModel)]="targa" [ngModelOptions]="{standalone: true}" >
-      <option  *ngFor = "let vehicle of vehicles" >
+      <option  *ngFor = "let vehicle of vehicles" [value]="vehicle.targa" >
         {{vehicle.targa}}
       </option>
     </select>

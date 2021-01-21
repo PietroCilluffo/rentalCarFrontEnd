@@ -10,6 +10,7 @@ import {ReservationService} from '../service/reservation.service';
 import {ShowReservationConfig} from '../config/ShowReservationConfig';
 import {MyButtonConfig} from '../config/MyButtonConfig';
 import {Router} from '@angular/router';
+import {Reservation} from '../../Reservation';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -21,13 +22,18 @@ export class HomeComponent implements OnInit {
   provadati: any[];
   configTable: MyTableConfig;
   operazioni: MyButtonConfig[];
+  temp:any[];
+  temp2: Reservation[] = [];
   type: string;
   idUser:number;
-  constructor(private userService: UserService, private reservationService: ReservationService, private router: Router) { }
+  constructor(private userService: UserService, private reservationService: ReservationService, private router: Router) {
+
+  }
 
   ngOnInit(): void {
+
     this.idUser = 1;  // solo per questa fase poi sarà inizializzato a seconda di chi logga
-    this.type = 'u'; // solo per questa fase poi sarà inizializzato a seconda di chi logga
+    this.type = 's'; // solo per questa fase poi sarà inizializzato a seconda di chi logga
     if (this.type === 's') {
       this.userConfig = new ShowUserConfig();
 
@@ -84,10 +90,25 @@ export class HomeComponent implements OnInit {
         },
         ];
         this.reservationService.getReservationsByIdUser(this.idUser).subscribe(
-          response =>
-            this.provadati = response
+          response => {
+            this.temp = response;
+            this.temp.forEach(item => {
+
+              const v = new Reservation(Number(item.id), item.dataInizio,item.dataFine,item.vehicle.targa, Number(item.user.id),item.approvazione);
+              console.log(v);
+              this.temp2.push(v);
+
+            });
+
+
+            this.provadati = this.temp2;
+          }
+
         );
-       // console.log(this.provadati);
+
+
+
+
 
     }
   }
@@ -109,8 +130,8 @@ export class HomeComponent implements OnInit {
 
     if (this.type === 's') {
       if (object.text === 'elimina') {
-        this.userService.deleteUser(object.obj);
-
+        this.userService.deleteUserById(object.obj.id).subscribe();
+        console.log('we', object.text, object.obj);
       } else {
 
         console.log('we', object.text, object.obj.id);
@@ -119,7 +140,7 @@ export class HomeComponent implements OnInit {
       }
     }else{
       if (object.text === 'elimina') {
-        this.reservationService.deleteReservation(object.obj);
+        this.reservationService.deleteReservationById(object.obj.id).subscribe();
       } else {
         this.router.navigate([`${'handle'}`, {id: object.obj.id, tipo: 3}]); //eventualmente passare solo l'id
       }

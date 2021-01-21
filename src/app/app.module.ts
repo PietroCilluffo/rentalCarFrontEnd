@@ -20,7 +20,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import { ParcoAutoComponent } from './parco-auto/parco-auto.component';
 
-
+import { HttpClientModule } from '@angular/common/http';
 import { AddComponent } from './add/add.component';
 import { AddFormComponent } from './add/add-form/add-form.component';
 import { HandleComponent } from './handle/handle.component';
@@ -59,7 +59,8 @@ import { HandleFormComponent } from './handle/handle-form/handle-form.component'
         MatButtonModule,
         MatFormFieldModule,
         MatSelectModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+      HttpClientModule
     ],
   providers: [],
   bootstrap: [AppComponent]

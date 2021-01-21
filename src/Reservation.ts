@@ -4,13 +4,14 @@ export class Reservation{
   dataFine: string;
   targa: string;
   idUser: number;
-  approvato: string;
-  constructor(id,dataInizio,dataFine,targa,idUser){
+  approvazione: string;
+  constructor(id,dataInizio,dataFine,targa,idUser,approvazione){
   this.id =  id;
   this.dataInizio =dataInizio;
   this.dataFine= dataFine;
   this.targa= targa;
   this.idUser=idUser;
-  this.approvato = 'NO';
+  this.approvazione = approvazione;
 }
+
 }

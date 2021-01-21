@@ -3,26 +3,60 @@ import {User} from '../../User';
 import {USER, addUser, updateUser, deleteUser, getUserById} from '../../mock-user';
 
 import { Observable, of } from 'rxjs';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-
-  constructor() { }
-  getUsers(): Observable<User[]> {
-      return of(USER);
+  url = 'http://localhost:5050/user';
+  constructor( private http: HttpClient) { }
+  getUsers(): Observable<any> {
+    const getUrl = this.url + '/find';
+    return this.http.get(getUrl);
   }
 
-  addUser(USER, User): Observable<User[]> {
-    return  of (addUser(USER, User));
+  addUser(user: User): Observable<any> {
+    console.log(user);
+    const getUrl = this.url + '/add';
+    return this.http.post<any>(getUrl, user);
   }
-  updateUser(User): Observable<any> {
-    return of (updateUser(User));
+  updateUser(user: User): Observable<any> {
+    const getUrl = this.url + '/update';
+    return this.http.put<any>(getUrl, user);
   }
-  deleteUser(User): Observable<any> {
-    return of (deleteUser(User));
+  deleteUser(u: User): Observable<any> {
+    const getUrl = this.url + '/delete';
+    console.log("delete service" + u);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      body: {
+        user: u
+      }
+    };
+    return this.http.delete<any>(getUrl, httpOptions);
   }
-  getUserById(id): Observable<User>{
-    return of (getUserById(id));
+
+  deleteUserById(id):Observable<any> {
+    const getUrl = this.url + '/delete/';
+    return this.http.delete<any>(getUrl + id);
   }
+  getUserById(id): Observable<any>{
+    const  getUrl = this.url + '/find/';
+    return this.http.get<any>(getUrl + id);
+  }
+  getUserByNome(nome): Observable<any>{
+    const  getUrl = this.url + '/find/';
+    return this.http.get<any>(getUrl + nome);
+  }
+  getUserByCognome(cognome): Observable<any>{
+    const  getUrl = this.url + '/find/';
+    return this.http.get<any>(getUrl + cognome);
+  }
+  getUserByEmail(email): Observable<any>{
+    const  getUrl = this.url + '/find/';
+    return this.http.get<any>(getUrl + email);
+  }
+
 }
