@@ -22,18 +22,24 @@ export class HomeComponent implements OnInit {
   provadati: any[];
   configTable: MyTableConfig;
   operazioni: MyButtonConfig[];
-  temp:any[];
+  temp: any[];
   temp2: Reservation[] = [];
   type: string;
-  idUser:number;
+  idUser: number;
   constructor(private userService: UserService, private reservationService: ReservationService, private router: Router) {
 
   }
 
   ngOnInit(): void {
+    if (sessionStorage.getItem('username') === null) {
+      alert('non sei loggato! per favore prima di accedere loggati');
+      this.router.navigate([`${'login'}`]);
+    } else {
 
-    this.idUser = 1;  // solo per questa fase poi sarà inizializzato a seconda di chi logga
-    this.type = 's'; // solo per questa fase poi sarà inizializzato a seconda di chi logga
+
+    this.idUser = Number(sessionStorage.getItem('id'));  // solo per questa fase poi sarà inizializzato a seconda di chi logga
+    this.type = sessionStorage.getItem('tipo'); // solo per questa fase poi sarà inizializzato a seconda di chi logga
+    console.log('Dentro home il tipo' + this.type);
     if (this.type === 's') {
       this.userConfig = new ShowUserConfig();
 
@@ -46,13 +52,13 @@ export class HomeComponent implements OnInit {
 
       };
       this.operazioni = [{
-        customCssClass : 'btn btn-warning',
+        customCssClass: 'btn btn-warning',
         text: 'modifica',
         icon: 'oi oi-cog'
 
       },
         {
-          customCssClass : 'btn btn-danger',
+          customCssClass: 'btn btn-danger',
           text: 'elimina',
           icon: 'oi oi-x',
           ref: '#gestEl',
@@ -65,62 +71,60 @@ export class HomeComponent implements OnInit {
       );
     } else {
 
-        this.reservationConfig = new ShowReservationConfig();
+      this.reservationConfig = new ShowReservationConfig();
 
-        this.configTable = {
-          headers: this.reservationConfig.header,
-          order: this.reservationConfig.orderconfig,
-          search: this.reservationConfig.searchconfig,
-          pagination: this.reservationConfig.pagination,
-          actions: this.reservationConfig.actions,
+      this.configTable = {
+        headers: this.reservationConfig.header,
+        order: this.reservationConfig.orderconfig,
+        search: this.reservationConfig.searchconfig,
+        pagination: this.reservationConfig.pagination,
+        actions: this.reservationConfig.actions,
 
-        };
-        this.operazioni = [{
-          customCssClass : 'btn btn-warning',
-          text: 'modifica',
-          icon: 'oi oi-cog'
+      };
+      this.operazioni = [{
+        customCssClass: 'btn btn-warning',
+        text: 'modifica',
+        icon: 'oi oi-cog'
 
-        },
+      },
         {
-          customCssClass : 'btn btn-danger',
+          customCssClass: 'btn btn-danger',
           text: 'elimina',
           icon: 'oi oi-x',
-            ref: '#gestEl',
+          ref: '#gestEl',
 
         },
-        ];
-        this.reservationService.getReservationsByIdUser(this.idUser).subscribe(
-          response => {
-            this.temp = response;
-            this.temp.forEach(item => {
+      ];
+      console.log('iduser' + this.idUser);
+      this.reservationService.getReservationsByIdUser(this.idUser).subscribe(
+        response => {
+          this.temp = response;
+          this.temp.forEach(item => {
 
-              const v = new Reservation(Number(item.id), item.dataInizio,item.dataFine,item.vehicle.targa, Number(item.user.id),item.approvazione);
-              console.log(v);
-              this.temp2.push(v);
+            const v = new Reservation(Number(item.id), item.dataInizio, item.dataFine, item.vehicle.targa, Number(item.user.id), item.approvazione);
+            console.log(v);
+            this.temp2.push(v);
 
-            });
-
-
-            this.provadati = this.temp2;
-          }
-
-        );
+          });
 
 
-
+          this.provadati = this.temp2;
+        }
+      );
 
 
     }
   }
+  }
     opButton(op: string){
-    if(this.type === 's'){
-      switch(op) {
+    if (this.type === 's'){
+      switch (op) {
         case 'AGGIUNGI':
           this.router.navigate([`${'add'}`, {tipo: 2}]);
-          //sarà poi definito un' elimina tutti
+          // sarà poi definito un' elimina tutti
       }
     }else{
-      switch(op) {
+      switch (op) {
         case 'AGGIUNGI':
           this.router.navigate([`${'add'}`, {tipo: 3}]);
       }
@@ -136,13 +140,13 @@ export class HomeComponent implements OnInit {
 
         console.log('we', object.text, object.obj.id);
 
-        this.router.navigate([`${'handle'}`, {id: object.obj.id , tipo: 2}]); //eventualmente passare solo l'id
+        this.router.navigate([`${'handle'}`, {id: object.obj.id , tipo: 2}]); // eventualmente passare solo l'id
       }
     }else{
       if (object.text === 'elimina') {
         this.reservationService.deleteReservationById(object.obj.id).subscribe();
       } else {
-        this.router.navigate([`${'handle'}`, {id: object.obj.id, tipo: 3}]); //eventualmente passare solo l'id
+        this.router.navigate([`${'handle'}`, {id: object.obj.id, tipo: 3}]); // eventualmente passare solo l'id
       }
     }
   }

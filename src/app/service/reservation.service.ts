@@ -32,7 +32,7 @@ export class ReservationService {
     const getUrl = this.url + '/add';
     return this.http.post<any>(getUrl, reservation);
   }
-  approva(r: Reservation): any{
+  approva(r: ReservationDto): any{
 
     const getUrl = this.url + '/update';
     return this.http.put<any>(getUrl, r);

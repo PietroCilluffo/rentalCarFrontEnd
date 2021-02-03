@@ -6,7 +6,9 @@ export const USER: User[] = [{
   cognome: 'Tocchi',
   id: 1,
   email: 'Manuel.Tocchi@si2001.it',
-  password: 'password'
+  password: 'password',
+  tipo: 'u'
+
 },
   {
     nome: 'Luigi',
@@ -15,7 +17,9 @@ export const USER: User[] = [{
 
   email: 'Luigi.Durso@si2001.it',
 
-  password: 'password'
+  password: 'password',
+    tipo: 'u'
+
   },
 
   {
@@ -23,7 +27,8 @@ export const USER: User[] = [{
     id: 3,
     cognome: 'Caressa',
     email: 'Fabio.Caressa@erclab.it',
-    password: 'password'
+    password: 'password',
+    tipo: 'u'
   },
 
   {
@@ -31,21 +36,24 @@ export const USER: User[] = [{
     id: 4,
     cognome: 'Costacurta',
     email: 'Billy.Costacurta@erclab.it',
-  password: 'password'
+  password: 'password',
+    tipo: 'u'
   },
   {
     nome: 'Ste',
     id: 5,
     cognome: 'De Grandis',
     email: 'Ste.DeGrandis@erclab.it',
-    password: 'password'
+    password: 'password',
+    tipo: 'u'
   },
   {
     nome: 'Sandro',
     id: 6,
     cognome: 'Piccinini',
     email: 'Sandro.Piccinini@erclab.it',
-    password: 'password'
+    password: 'password',
+    tipo: 'u'
   },
 
   {
@@ -53,7 +61,8 @@ export const USER: User[] = [{
     id: 7,
     cognome: 'Di Canio',
     email: 'Paolo.DiCanio@erclab.it',
-    password: 'password'
+    password: 'password',
+    tipo: 'u'
 
   }];
 export function addUser(USER, User) : User[]{

@@ -58,11 +58,12 @@ export class AddFormComponent implements OnInit {
         cognome: ['', Validators.required],
         email: ['', Validators.required],
         password: ['', Validators.required],
+        tipo: ['', Validators.required],
 
       });
     }
     if (this.tipo === 3){
-      this.idUser = 1;
+      this.idUser = Number(sessionStorage.getItem('id'));
       this.vehicleService.getVehicles().subscribe(
         result => {
           this.vehicles = result;

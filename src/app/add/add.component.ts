@@ -46,7 +46,7 @@ export class AddComponent implements OnInit {
       this.config = {
 
 
-        campi: ['nome', 'cognome', 'email', 'password'],
+        campi: ['nome', 'cognome', 'email', 'password', 'tipo'],
         tipo: 2,
       };
     }
@@ -74,7 +74,7 @@ export class AddComponent implements OnInit {
     }
     if (this.tipo === 2){
 
-      const user = new User(0, object.values.nome,  object.values.cognome,  object.values.email,  object.values.password);
+      const user = new User(0, object.values.nome,  object.values.cognome,  object.values.email,  object.values.password, object.values.tipo);
 
       this.userService.addUser(user).subscribe(
         response2 => {
@@ -83,7 +83,7 @@ export class AddComponent implements OnInit {
       );
     }
     if (this.tipo === 3){
-      const user = new User(object.idUser, '', '', '', '');
+      const user = new User(object.idUser, '', '', '', '','');
       const vehicle = new Vehicle(0, '', '', '', '');
       const resDtos = new ReservationDto(user, vehicle);    // solo in questa maniera mi permetteva di creare un dto
       this.vehicleService.getVehicleByTarga(object.targa).subscribe(

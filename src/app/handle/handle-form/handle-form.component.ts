@@ -9,6 +9,8 @@ import {ReservationService} from '../../service/reservation.service';
 import {Reservation} from '../../../Reservation';
 import {UserService} from '../../service/user.service';
 import {VehicleService} from '../../service/vehicle.service';
+import {User} from '../../../User';
+import {ReservationDto} from '../../dto/ReservationDto';
 
 @Component({
   selector: 'app-handle-form',
@@ -24,19 +26,19 @@ export class HandleFormComponent implements OnInit {
   campi: any[];
   tipo: number;
   idUser: number;
-  object:any;
+  object: any;
 
-  user:any;
-  reservation:any;
-  vehicle:any;
+  user: any;
+  reservation: any;
+  vehicle: any;
   targa: string;
   reservationConfig: ShowReservationConfig;
   provadati: any[];
   configTable: MyTableConfig;
   operazioni: MyButtonConfig[];
   vehicles: Vehicle[];
-  temp:any[];
-  temp2:Reservation[] = [];
+  temp: any[];
+  temp2: Reservation[] = [];
   vehicleConfig: ShowVehicleConfig;
   configmodifica: MyButtonConfig ;
   item: any;
@@ -86,6 +88,7 @@ export class HandleFormComponent implements OnInit {
             email: [this.user.email, Validators.required],
             password: [this.user.password, Validators.required],
             id: [this.user.id, Validators.required],
+            tipo: [this.user.tipo, Validators.required],
 
           }
 
@@ -96,7 +99,7 @@ export class HandleFormComponent implements OnInit {
               this.temp = response2;
               console.log('risposta get ' + this.temp);
               this.temp.forEach(item => {
-                const v = new Reservation(Number(item.id), item.dataInizio,item.dataFine,item.vehicle.targa, Number(item.user.id),item.approvazione);
+                const v = new Reservation(Number(item.id), item.dataInizio, item.dataFine, item.vehicle.targa, Number(item.user.id), item.approvazione);
                 console.log(v);
                 this.temp2.push(v);
 
@@ -138,8 +141,8 @@ export class HandleFormComponent implements OnInit {
       this.reservationService.getReservationById(Number(this.config.object)).subscribe(
         response => {
           this.item = response;
-          console.log("dentro handle form" + this.item.dataInizio);
-          const v = new Reservation(Number(this.item.id), this.item.dataInizio,this.item.dataFine,this.item.vehicle.targa, Number(this.item.user.id),this.item.approvazione);
+          console.log('dentro handle form' + this.item.dataInizio);
+          const v = new Reservation(Number(this.item.id), this.item.dataInizio, this.item.dataFine, this.item.vehicle.targa, Number(this.item.user.id), this.item.approvazione);
 
           this.reservation = v;
 
@@ -159,10 +162,26 @@ export class HandleFormComponent implements OnInit {
     }
   }
   opSuRiga(object: any){
-    console.log('we', object.text, object.obj);
+
     object.obj.approvazione = true;
-    if(object.text === 'approva'){
-      this.reservationService.approva(object.obj);
+    if (object.text === 'approva'){
+      console.log('we', object.text, object.obj);
+      const user = new User(object.obj.idUser, '', '', '', '', '');
+      const vehicle = new Vehicle(0, '', '', '', '');
+      const resDtos = new ReservationDto(user, vehicle);
+      this.vehicleService.getVehicleByTarga(object.obj.targa).subscribe(
+        response => {
+           const idVehicle = response[0].id;
+
+           resDtos.id = object.obj.id;
+           resDtos.dataInizio = object.obj.dataInizio;
+           resDtos.dataFine = object.obj.dataFine;
+           resDtos.approvazione = object.obj.approvazione;
+           resDtos.user.id = Number(object.obj.idUser);
+           resDtos.vehicle.id = Number(idVehicle);
+           this.reservationService.approva(resDtos).subscribe();
+        }
+      );
     }else{
 
     }

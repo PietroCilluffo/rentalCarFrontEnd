@@ -16,6 +16,7 @@ const routes: Routes =  [
   {path: 'add', component: AddComponent},
   {path: 'handle', component: HandleComponent},
 
+
 ];
 
 @NgModule({

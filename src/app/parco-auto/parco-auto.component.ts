@@ -24,10 +24,15 @@ export class ParcoAutoComponent implements OnInit {
   constructor(private vehicleService: VehicleService, private router: Router) { }
 
   ngOnInit(): void {
+    if (sessionStorage.getItem('username') === null) {
+      alert('non sei loggato! per favore prima di accedere loggati');
+      this.router.navigate([`${'login'}`]);
+    } else {
     this.vehicleConfig = new ShowVehicleConfig();
-    this.type = 's'; //quando ci sarà un login si potrà configurare passandolo nell'url con lo snapshot
 
-    if(this.type === 's'){   //sse sono un admin posso gestire i veicoli
+    this.type = sessionStorage.getItem('tipo'); //quando ci sarà un login si potrà configurare passandolo nell'url con lo snapshot
+
+    if (this.type === 's') {   //sse sono un admin posso gestire i veicoli
       this.configTable = {
         headers: this.vehicleConfig.header,
         order: this.vehicleConfig.orderconfig,
@@ -38,20 +43,20 @@ export class ParcoAutoComponent implements OnInit {
       };
 
       this.operazioni = [{
-        customCssClass : 'btn btn-warning',
+        customCssClass: 'btn btn-warning',
         text: 'modifica',
         icon: 'oi oi-cog'
 
       },
         {
-          customCssClass : 'btn btn-danger',
+          customCssClass: 'btn btn-danger',
           text: 'elimina',
           icon: 'oi oi-x',
           ref: '#gestEl',
 
         },
       ];
-    }else{
+    } else {
       this.configTable = {
         headers: this.vehicleConfig.header,
         order: this.vehicleConfig.orderconfig,
@@ -66,6 +71,11 @@ export class ParcoAutoComponent implements OnInit {
         this.provadati = response
     );
   }
+  }
+
+
+
+
   goToPage(pageName: string): void{
     this.router.navigate([`${pageName}`]);
 

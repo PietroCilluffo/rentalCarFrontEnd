@@ -4,11 +4,13 @@ export class User{
   cognome: string;
   email: string;
   password: string;
-  constructor(id,nome,cognome,email,password){
+  tipo:string;
+  constructor(id,nome,cognome,email,password,tipo){
     this.id = id;
     this.nome = nome;
     this.cognome = cognome;
     this.email = email;
     this.password = password;
+    this.tipo = tipo;
 }
 }

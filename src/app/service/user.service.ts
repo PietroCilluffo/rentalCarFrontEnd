@@ -55,7 +55,7 @@ export class UserService {
     return this.http.get<any>(getUrl + cognome);
   }
   getUserByEmail(email): Observable<any>{
-    const  getUrl = this.url + '/find/';
+    const  getUrl = this.url + '/find/email/';
     return this.http.get<any>(getUrl + email);
   }
 

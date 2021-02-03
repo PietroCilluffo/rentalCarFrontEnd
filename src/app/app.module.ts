@@ -20,11 +20,12 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import { ParcoAutoComponent } from './parco-auto/parco-auto.component';
 
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { AddComponent } from './add/add.component';
 import { AddFormComponent } from './add/add-form/add-form.component';
 import { HandleComponent } from './handle/handle.component';
 import { HandleFormComponent } from './handle/handle-form/handle-form.component';
+import { AuthInterceptorService} from './service/auth-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,12 @@ import { HandleFormComponent } from './handle/handle-form/handle-form.component'
         ReactiveFormsModule,
       HttpClientModule
     ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true
+    }
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
